@@ -35,4 +35,8 @@ public class Member {
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<>();
 
+    public void changeName(String name) {
+        this.name = name;
+    }
+
 }
