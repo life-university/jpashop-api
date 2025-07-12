@@ -4,8 +4,8 @@ import com.example.jpashop.domain.Address;
 import com.example.jpashop.domain.Order;
 import com.example.jpashop.domain.OrderStatus;
 import com.example.jpashop.repository.OrderRepository;
-import com.example.jpashop.repository.simple.OrderSimpleRepository;
-import com.example.jpashop.repository.simple.SimpleOrderV4DTO;
+import com.example.jpashop.repository.order.simple.OrderSimpleRepository;
+import com.example.jpashop.repository.order.simple.OrderSimpleV4DTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,7 +44,7 @@ public class OrderSimpleApiController {
 
     @GetMapping("/api/v4/simple-orders")
     public Result ordersV4() {
-        List<SimpleOrderV4DTO> all = orderSimpleRepository.findAll_DTO();
+        List<OrderSimpleV4DTO> all = orderSimpleRepository.findAll_DTO();
         return new Result<>(all.size(), all);
     }
 

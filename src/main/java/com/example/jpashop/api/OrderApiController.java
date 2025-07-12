@@ -5,7 +5,8 @@ import com.example.jpashop.domain.Order;
 import com.example.jpashop.domain.OrderItem;
 import com.example.jpashop.domain.OrderStatus;
 import com.example.jpashop.repository.OrderRepository;
-import lombok.Getter;
+import com.example.jpashop.repository.order.query.OrderQueryDTO;
+import com.example.jpashop.repository.order.query.OrderQueryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import java.util.List;
 public class OrderApiController {
 
     private final OrderRepository orderRepository;
+    private final OrderQueryRepository orderQueryRepository;
 
     @GetMapping("/api/v1/orders")
     public List<Order> ordersV1() {
@@ -43,6 +45,18 @@ public class OrderApiController {
         List<Order> orders = orderRepository.findAll_MemberDelivery();
         List<OrderDTO> all = orders.stream().map(OrderDTO::of).toList();
         return new Result<>(all.size(), all);
+    }
+
+    @GetMapping("/api/v5/orders")
+    public Result ordersV5() {
+        List<OrderQueryDTO> orders = orderQueryRepository.findOrderQueryDTO();
+        return new Result<>(orders.size(), orders);
+    }
+
+    @GetMapping("/api/v6/orders")
+    public Result ordersV6() {
+        List<OrderQueryDTO> orders = orderQueryRepository.findOrderQueryDTOOptimization();
+        return new Result<>(orders.size(), orders);
     }
 
     record OrderDTO(
