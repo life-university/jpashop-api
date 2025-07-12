@@ -5,6 +5,8 @@ import com.example.jpashop.domain.Order;
 import com.example.jpashop.domain.OrderItem;
 import com.example.jpashop.domain.OrderStatus;
 import com.example.jpashop.repository.OrderRepository;
+import com.example.jpashop.repository.order.query.OrderFlatDTO;
+import com.example.jpashop.repository.order.query.OrderItemQueryDTO;
 import com.example.jpashop.repository.order.query.OrderQueryDTO;
 import com.example.jpashop.repository.order.query.OrderQueryRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -57,6 +62,21 @@ public class OrderApiController {
     public Result ordersV6() {
         List<OrderQueryDTO> orders = orderQueryRepository.findOrderQueryDTOOptimization();
         return new Result<>(orders.size(), orders);
+    }
+
+    @GetMapping("/api/v7/orders")
+    public Result ordersV7() {
+        List<OrderFlatDTO> flatResult = orderQueryRepository.findOrderQueryDTOFlat();
+
+        List<OrderQueryDTO> result = flatResult.stream()
+            .collect(groupingBy(o ->
+                        new OrderQueryDTO(o.getOrderId(), o.getName(), o.getOrderDate(), o.getStatus(), o.getAddress()),
+                    mapping(o -> new OrderItemQueryDTO(o.getOrderId(), o.getItemName(), o.getOrderPrice(), o.getCount()), toList())
+                )
+            ).entrySet().stream()
+            .map(e -> new OrderQueryDTO(e.getKey().getOrderId(), e.getKey().getName(), e.getKey().getOrderDate(), e.getKey().getStatus(), e.getKey().getAddress(), e.getValue()))
+            .toList();
+        return new Result<>(result.size(), result);
     }
 
     record OrderDTO(

@@ -24,4 +24,13 @@ public class OrderQueryDTO {
         this.status = status;
         this.address = address;
     }
+
+    public OrderQueryDTO(Long orderId, String name, LocalDateTime orderDate, OrderStatus status, Address address, List<OrderItemQueryDTO> orderItems) {
+        this.orderId = orderId;
+        this.name = name;
+        this.orderDate = orderDate;
+        this.status = status;
+        this.address = address;
+        this.orderItems = orderItems;
+    }
 }
