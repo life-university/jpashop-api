@@ -38,6 +38,13 @@ public class OrderApiController {
         return new Result<>(all.size(), all);
     }
 
+    @GetMapping("/api/v4/orders")
+    public Result ordersV4Paging() {
+        List<Order> orders = orderRepository.findAll_MemberDelivery();
+        List<OrderDTO> all = orders.stream().map(OrderDTO::of).toList();
+        return new Result<>(all.size(), all);
+    }
+
     record OrderDTO(
         Long orderId, String name, LocalDateTime orderDate, OrderStatus status, Address address, List<OrderItemDTO> orderItems
     ) {

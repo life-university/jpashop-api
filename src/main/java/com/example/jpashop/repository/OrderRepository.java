@@ -7,6 +7,7 @@ import jakarta.persistence.EntityManager;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 import org.springframework.stereotype.Repository;
 
 @Repository
