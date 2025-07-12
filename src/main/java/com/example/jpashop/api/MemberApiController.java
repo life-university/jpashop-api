@@ -75,9 +75,6 @@ public class MemberApiController {
     record UpdateMemberResponse(Long id, String name) {
     }
 
-    record Result<T>(int count, T data) {
-    }
-
     record GetMemberResponse(String name, Address address) {
     }
 

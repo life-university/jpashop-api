@@ -1,8 +1,11 @@
 package com.example.jpashop.repository;
 
 import com.example.jpashop.domain.Order;
+import com.example.jpashop.repository.simple.SimpleOrderV4DTO;
 import jakarta.persistence.EntityManager;
+
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -25,4 +28,9 @@ public class OrderRepository {
             .getResultList();
     }
 
+    public List<Order> findAll_MemberDelivery() {
+        return em.createQuery("select o from Order o" +
+            " join fetch o.member m" +
+            " join fetch o.delivery d", Order.class).getResultList();
+    }
 }
