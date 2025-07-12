@@ -57,14 +57,13 @@ public class Order {
 
     // 생성 메서드
     public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
-        Order order = Order.builder()
+        return Order.builder()
             .member(member)
             .delivery(delivery)
             .status(OrderStatus.ORDER)
             .orderDate(LocalDateTime.now())
             .orderItems(List.of(orderItems))
             .build();
-        return order;
     }
 
     // 비즈니스 로직
