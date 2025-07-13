@@ -2,10 +2,11 @@ package com.example.jpashop.service;
 
 import com.example.jpashop.domain.Member;
 import com.example.jpashop.repository.MemberRepository;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -37,12 +38,12 @@ public class MemberService {
     }
 
     public Member findById(Long memberId) {
-        return memberRepository.findById(memberId);
+        return memberRepository.findById(memberId).orElseThrow();
     }
 
     @Transactional
     public void update(Long memberId, String name) {
-        Member member = memberRepository.findById(memberId);
+        Member member = memberRepository.findById(memberId).orElseThrow();
         member.changeName(name);
     }
 

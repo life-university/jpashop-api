@@ -31,7 +31,7 @@ public class OrderService {
     @Transactional
     public Long order(Long memberId, Long itemId, int count) {
         // lookup entity
-        Member member = memberRepository.findById(memberId);
+        Member member = memberRepository.findById(memberId).orElseThrow();
         Item item = itemRepository.findById(itemId);
 
         // create delivery
