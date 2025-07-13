@@ -4,6 +4,7 @@ import com.example.jpashop.domain.Address;
 import com.example.jpashop.domain.Order;
 import com.example.jpashop.domain.OrderItem;
 import com.example.jpashop.domain.OrderStatus;
+import com.example.jpashop.query_service.OrderQueryService;
 import com.example.jpashop.repository.OrderRepository;
 import com.example.jpashop.repository.order.query.OrderFlatDTO;
 import com.example.jpashop.repository.order.query.OrderItemQueryDTO;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.*;
 
@@ -25,6 +25,7 @@ public class OrderApiController {
 
     private final OrderRepository orderRepository;
     private final OrderQueryRepository orderQueryRepository;
+    private final OrderQueryService orderQueryService;
 
     @GetMapping("/api/v1/orders")
     public List<Order> ordersV1() {
@@ -77,6 +78,11 @@ public class OrderApiController {
             .map(e -> new OrderQueryDTO(e.getKey().getOrderId(), e.getKey().getName(), e.getKey().getOrderDate(), e.getKey().getStatus(), e.getKey().getAddress(), e.getValue()))
             .toList();
         return new Result<>(result.size(), result);
+    }
+
+    @GetMapping("/api/v8/orders")
+    public Result<List<com.example.jpashop.query_service.OrderQueryDTO>> ordersV8() {
+        return orderQueryService.ordersV8();
     }
 
     record OrderDTO(
