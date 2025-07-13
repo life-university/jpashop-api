@@ -39,6 +39,7 @@ public class Order {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @Builder.Default
     @BatchSize(size = 5)
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems = new ArrayList<>();

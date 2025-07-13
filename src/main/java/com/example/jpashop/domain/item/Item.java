@@ -2,20 +2,14 @@ package com.example.jpashop.domain.item;
 
 import com.example.jpashop.domain.Category;
 import com.example.jpashop.exception.NotEnoughStockException;
-import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorColumn;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
-import jakarta.persistence.ManyToMany;
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -34,6 +28,7 @@ public abstract class Item {
     private int price;
     private int stockQuantity;
 
+    @Builder.Default
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
 
